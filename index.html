@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ModaStyle - Tienda de Ropa Premium</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        .cart-item:hover {
+            background-color: #f9f9f9;
+        }
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+        #product-modal {
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header/Navbar -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-8">
+                <a href="#" class="text-2xl font-bold text-gray-800">Moda<span class="text-indigo-600">Style</span></a>
+                
+                <!-- Menú de navegación -->
+                <nav class="hidden md:flex space-x-6">
+                    <a href="#" class="text-gray-700 hover:text-indigo-600 font-medium">Inicio</a>
+                    <div class="dropdown relative">
+                        <button class="text-gray-700 hover:text-indigo-600 font-medium flex items-center">
+                            Mujer <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                        </button>
+                        <div class="dropdown-menu absolute hidden mt-2 w-48 bg-white shadow-lg rounded-md py-1 z-50">
+                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-indigo-50">Vestidos</a>
+                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-indigo-50">Blusas</a>
+                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-indigo-50">Pantalones</a>
+                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-indigo-50">Accesorios</a>
+                        </div>
+                    </div>
+                    <div class="dropdown relative">
+                        <button class="text-gray-700 hover:text-indigo-600 font-medium flex items-center">
+                            Hombre <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                        </button>
+                        <div class="dropdown-menu absolute hidden mt-2 w-48 bg-white shadow-lg rounded-md py-1 z-50">
+                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-indigo-50">Camisas</a>
+                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-indigo-50">Pantalones</a>
+                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-indigo-50">Chaquetas</a>
+                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-indigo-50">Zapatos</a>
+                        </div>
+                    </div>
+                    <a href="#" class="text-gray-700 hover:text-indigo-600 font-medium">Ofertas</a>
+                    <a href="#" class="text-gray-700 hover:text-indigo-600 font-medium">Nosotros</a>
+                </nav>
+            </div>
+            
+            <!-- Carrito y usuario -->
+            <div class="flex items-center space-x-4">
+                <button id="search-btn" class="text-gray-600 hover:text-indigo-600">
+                    <i class="fas fa-search"></i>
+                </button>
+                <a href="#" class="text-gray-600 hover:text-indigo-600 hidden md:block">
+                    <i class="far fa-user"></i>
+                </a>
+                <button id="cart-btn" class="text-gray-600 hover:text-indigo-600 relative">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cart-count" class="absolute -top-2 -right-2 bg-indigo-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                </button>
+                <button id="mobile-menu-btn" class="md:hidden text-gray-600">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Búsqueda móvil -->
+        <div id="mobile-search" class="hidden px-4 py-2 bg-white border-t">
+            <div class="relative">
+                <input type="text" placeholder="Buscar productos..." class="w-full px-4 py-2 border rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                <button class="absolute right-3 top-2 text-gray-500">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Menú móvil -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+            <div class="px-4 py-3 space-y-3">
+                <a href="#" class="block text-gray-700 hover:text-indigo-600">Inicio</a>
+                <div>
+                    <button class="flex justify-between items-center w-full text-gray-700 hover:text-indigo-600">
+                        <span>Mujer</span>
+                        <i class="fas fa-chevron-down text-xs"></i>
+                    </button>
+                    <div class="mt-2 ml-4 space-y-2 hidden" id="mobile-women-menu">
+                        <a href="#" class="block text-gray-600 hover:text-indigo-600">Vestidos</a>
+                        <a href="#" class="block text-gray-600 hover:text-indigo-600">Blusas</a>
+                        <a href="#" class="block text-gray-600 hover:text-indigo-600">Pantalones</a>
+                        <a href="#" class="block text-gray-600 hover:text-indigo-600">Accesorios</a>
+                    </div>
+                </div>
+                <div>
+                    <button class="flex justify-between items-center w-full text-gray-700 hover:text-indigo-600">
+                        <span>Hombre</span>
+                        <i class="fas fa-chevron-down text-xs"></i>
+                    </button>
+                    <div class="mt-2 ml-4 space-y-2 hidden" id="mobile-men-menu">
+                        <a href="#" class="block text-gray-600 hover:text-indigo-600">Camisas</a>
+                        <a href="#" class="block text-gray-600 hover:text-indigo-600">Pantalones</a>
+                        <a href="#" class="block text-gray-600 hover:text-indigo-600">Chaquetas</a>
+                        <a href="#" class="block text-gray-600 hover:text-indigo-600">Zapatos</a>
+                    </div>
+                </div>
+                <a href="#" class="block text-gray-700 hover:text-indigo-600">Ofertas</a>
+                <a href="#" class="block text-gray-700 hover:text-indigo-600">Nosotros</a>
+                <a href="#" class="block text-gray-700 hover:text-indigo-600">Mi cuenta</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-r from-indigo-500 to-purple-600 text-white py-20">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 mb-10 md:mb-0">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">Nueva Colección Verano 2023</h1>
+                <p class="text-xl mb-8">Descubre los diseños exclusivos para esta temporada con hasta 30% de descuento.</p>
+                <button class="bg-white text-indigo-600 px-8 py-3 rounded-lg font-bold hover:bg-gray-100 transition duration-300">Comprar Ahora</button>
+            </div>
+            <div class="md:w-1/2 flex justify-center"> <!-- Imagen destacada -->
+                <img src="/img/louis-vuitton-zapatilla-deportiva-lv-trainer--BTU032MI01_PM2_Front view.avif" alt="Modelo femenino y masculino luciendo la nueva colección de verano con ropa fresca y elegante en un fondo playero" class="rounded-lg shadow-xl">
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Categories -->
+    <section class="py-12 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">Categorías Destacadas</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <a href="#" class="group">
+                    <div class="relative overflow-hidden rounded-lg h-64">
+                        <img src="https://placehold.co/600x600" alt="Elegante vestido negro de fiesta con detalles dorados para ocasiones especiales" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+                            <h3 class="text-white text-xl font-bold">Vestidos</h3>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="group">
+                    <div class="relative overflow-hidden rounded-lg h-64">
+                        <img src="https://placehold.co/600x600" alt="Camisa blanca de vestir con detalles azules para hombre con estilo casual elegante" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+                            <h3 class="text-white text-xl font-bold">Camisas</h3>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="group">
+                    <div class="relative overflow-hidden rounded-lg h-64">
+                        <img src="https://placehold.co/600x600" alt="Jeans azul oscuro modernos con corte slim fit para hombre y mujer" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+                            <h3 class="text-white text-xl font-bold">Jeans</h3>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="group">
+                    <div class="relative overflow-hidden rounded-lg h-64">
+                        <img src="https://placehold.co/600x600" alt="Zapatillas deportivas modernas en colores pastel con suela gruesa para estilo urbano" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+                            <h3 class="text-white text-xl font-bold">Zapatos</h3>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="py-12 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-8">
+                <h2 class="text-3xl font-bold mb-4 md:mb-0">Nuestros Productos</h2>
+                <div class="flex space-x-4">
+                    <select class="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        <option>Categoría</option>
+                        <option>Mujer</option>
+                        <option>Hombre</option>
+                        <option>Niños</option>
+                        <option>Accesorios</option>
+                    </select>
+                    <select class="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        <option>Ordenar por</option>
+                        <option>Precio: Menor a Mayor</option>
+                        <option>Precio: Mayor a Menor</option>
+                        <option>Más Popular</option>
+                        <option>Nuevos</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                <!-- Producto 1 -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-sm product-card transition duration-300">
+                    <div class="relative">
+                        <img src="https://placehold.co/600x600" alt="Vestido midi floral con estampado tropical en tonos azules y verdes para verano" class="w-full h-80 object-cover">
+                        <div class="absolute top-2 right-2">
+                            <button class="bg-white rounded-full p-2 shadow hover:bg-indigo-600 hover:text-white">
+                                <i class="far fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-1">
+                            <h3 class="font-bold text-lg">Vestido Floral</h3>
+                            <span class="text-indigo-600 font-bold">$59.99</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">Vestido midi con estampado tropical</p>
+                        <div class="flex justify-between items-center">
+                            <div class="flex space-x-1 text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <span class="text-gray-500 text-sm ml-1">(24)</span>
+                            </div>
+                            <button class="add-to-cart bg-indigo-600 text-white px-3 py-1 rounded text-sm hover:bg-indigo-700" data-id="1" data-name="Vestido Floral" data-price="59.99">Añadir</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Producto 2 -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-sm product-card transition duration-300">
+                    <div class="relative">
+                        <img src="https://placehold.co/600x600" alt="Camisa de lino blanca para hombre con botones de nácar y bolsillo de pecho" class="w-full h-80 object-cover">
+                        <span class="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded">Nuevo</span>
+                        <div class="absolute top-2 right-2">
+                            <button class="bg-white rounded-full p-2 shadow hover:bg-indigo-600 hover:text-white">
+                                <i class="far fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-1">
+                            <h3 class="font-bold text-lg">Camisa de Lino</h3>
+                            <span class="text-indigo-600 font-bold">$39.99</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">Camisa blanca casual de verano</p>
+                        <div class="flex justify-between items-center">
+                            <div class="flex space-x-1 text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <span class="text-gray-500 text-sm ml-1">(18)</span>
+                            </div>
+                            <button class="add-to-cart bg-indigo-600 text-white px-3 py-1 rounded text-sm hover:bg-indigo-700" data-id="2" data-name="Camisa de Lino" data-price="39.99">Añadir</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Producto 3 -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-sm product-card transition duration-300">
+                    <div class="relative">
+                        <img src="https://placehold.co/600x600" alt="Jeans negros ajustados con roturas estratégicas y efecto desgastado para looks urbanos" class="w-full h-80 object-cover">
+                        <span class="absolute top-2 left-2 bg-green-500 text-white text-xs px-2 py-1 rounded">-20%</span>
+                        <div class="absolute top-2 right-2">
+                            <button class="bg-white rounded-full p-2 shadow hover:bg-indigo-600 hover:text-white">
+                                <i class="far fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-1">
+                            <h3 class="font-bold text-lg">Jeans Negros</h3>
+                            <div>
+                                <span class="text-gray-400 line-through text-sm">$49.99</span>
+                                <span class="text-indigo-600 font-bold ml-2">$39.99</span>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">Pantalones ajustados con efecto desgastado</p>
+                        <div class="flex justify-between items-center">
+                            <div class="flex space-x-1 text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span class="text-gray-500 text-sm ml-1">(37)</span>
+                            </div>
+                            <button class="add-to-cart bg-indigo-600 text-white px-3 py-1 rounded text-sm hover:bg-indigo-700" data-id="3" data-name="Jeans Negros" data-price="39.99">Añadir</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Producto 4 -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-sm product-card transition duration-300">
+                    <div class="relative">
+                        <img src="https://placehold.co/600x600" alt="Sneakers deportivas blancas con detalles en negro y suela gruesa para estilo urbano" class="w-full h-80 object-cover">
+                        <div class="absolute top-2 right-2">
+                            <button class="bg-white rounded-full p-2 shadow hover:bg-indigo-600 hover:text-white">
+                                <i class="far fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-1">
+                            <h3 class="font-bold text-lg">Sneakers Urbanas</h3>
+                            <span class="text-indigo-600 font-bold">$79.99</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">Zapatillas blancas con suela gruesa</p>
+                        <div class="flex justify-between items-center">
+                            <div class="flex space-x-1 text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <span class="text-gray-500 text-sm ml-1">(42)</span>
+                            </div>
+                            <button class="add-to-cart bg-indigo-600 text-white px-3 py-1 rounded text-sm hover:bg-indigo-700" data-id="4" data-name="Sneakers Urbanas" data-price="79.99">Añadir</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Más productos... (similares) -->
+            </div>
+            
+            <div class="mt-12 text-center">
+                <button class="border-2 border-indigo-600 text-indigo-600 px-8 py-3 rounded-lg font-bold hover:bg-indigo-600 hover:text-white transition duration-300">
+                    Ver más productos
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-12 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <div class="bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-truck text-indigo-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Envío Gratis</h3>
+                    <p class="text-gray-600">En compras superiores a $100 con entrega en 2-3 días laborales.</p>
+                </div>
+                <div class="text-center">
+                    <div class="bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-exchange-alt text-indigo-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Devoluciones Fáciles</h3>
+                    <p class="text-gray-600">30 días para cambios o devoluciones sin complicaciones.</p>
+                </div>
+                <div class="text-center">
+                    <div class="bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-headset text-indigo-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Soporte 24/7</h3>
+                    <p class="text-gray-600">Nuestro equipo está disponible para ayudarte cuando lo necesites.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="py-12 bg-gray-100">
+        <div class="container mx-auto px-4 max-w-4xl">
+            <div class="bg-white rounded-lg shadow-sm p-8 text-center">
+                <h2 class="text-2xl md:text-3xl font-bold mb-4">Suscríbete a nuestro Newsletter</h2>
+                <p class="text-gray-600 mb-6">Recibe las últimas tendencias, ofertas exclusivas y descuentos especiales directamente en tu bandeja de entrada.</p>
+                <form class="flex flex-col sm:flex-row gap-3 max-w-xl mx-auto">
+                    <input type="email" placeholder="Tu correo electrónico" class="flex-grow px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    <button type="submit" class="bg-indigo-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-indigo-700 transition duration-300">Suscribirse</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white pt-12 pb-6">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">ModaStyle</h3>
+                    <p class="text-gray-400">Somos una tienda de moda comprometida con ofrecerte las últimas tendencias a precios accesibles con la mejor calidad.</p>
+                    <div class="flex space-x-4 mt-4">
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-pinterest-p"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Compra</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Mujer</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Hombre</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Niños</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Accesorios</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Ofertas</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Información</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Nosotros</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Blog de Moda</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Términos y Condiciones</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Política de Privacidad</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Preguntas Frecuentes</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Contacto</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-3"></i>
+                            <span>Av. Principal 1234, Ciudad, País</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-phone-alt mt-1 mr-3"></i>
+                            <span>+1 234 567 890</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-envelope mt-1 mr-3"></i>
+                            <span>info@modastyle.com</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-clock mt-1 mr-3"></i>
+                            <span>Lun-Vie: 9am - 6pm</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-6 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 text-sm mb-4 md:mb-0">© 2023 ModaStyle. Todos los derechos reservados.</p>
+                <div class="flex space-x-6">
+                    <img src="https://placehold.co/50x30" alt="Logo de Visa como método de pago aceptado" class="h-6">
+                    <img src="https://placehold.co/50x30" alt="Logo de Mastercard como método de pago aceptado" class="h-6">
+                    <img src="https://placehold.co/50x30" alt="Logo de PayPal como método de pago aceptado" class="h-6">
+                    <img src="https://placehold.co/50x30" alt="Logo de American Express como método de pago aceptado" class="h-6">
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Sidebar -->
+    <div id="cart-sidebar" class="fixed top-0 right-0 h-full w-full md:w-96 bg-white shadow-lg transform translate-x-full transition-transform duration-300 ease-in-out z-50">
+        <div class="h-full flex flex-col">
+            <div class="p-4 border-b flex justify-between items-center">
+                <h3 class="text-lg font-bold">Tu Carrito (<span id="sidebar-cart-count">0</span>)</h3>
+                <button id="close-cart" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div id="cart-items" class="flex-grow overflow-y-auto p-4">
+                <!-- Los elementos del carrito se agregarán aquí dinámicamente -->
+                <p class="text-gray-500 text-center py-8">Tu carrito está vacío</p>
+            </div>
+            <div class="p-4 border-t">
+                <div class="flex justify-between mb-4">
+                    <span class="font-bold">Subtotal</span>
+                    <span id="cart-subtotal">$0.00</span>
+                </div>
+                <button class="w-full bg-indigo-600 text-white py-3 rounded-lg font-bold hover:bg-indigo-700 transition duration-300">Proceder al Pago</button>
+                <button class="w-full mt-2 border border-indigo-600 text-indigo-600 py-2 rounded-lg font-medium hover:bg-indigo-50 transition duration-300">Seguir Comprando</button>
+            </div>
+        </div>
+    </div>
+    <div id="cart-overlay" class="hidden fixed inset-0 bg-black bg-opacity-50 z-40"></div>
+
+    <!-- Product Modal (para vista rápida) -->
+    <div id="product-modal" class="hidden fixed inset-0 overflow-y-auto z-50">
+        <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+                <div id="modal-overlay" class="absolute inset-0 bg-black bg-opacity-50"></div>
+            </div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full">
+                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <button id="close-modal" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    <div class="sm:flex sm:items-start">
+                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+                            <div class="flex flex-col md:flex-row">
+                                <!-- Imagen del producto -->
+                                <div class="md:w-1/2 mb-4 md:mb-0">
+                                    <img id="modal-product-image" src="https://placehold.co/500x600" alt="Imagen ampliada del producto seleccionado" class="w-full rounded-lg">
+                                </div>
+                                <!-- Información del producto -->
+                                <div class="md:w-1/2 md:pl-8">
+                                    <h3 id="modal-product-name" class="text-2xl font-bold mb-2">Nombre del Producto</h3>
+                                    <div class="flex items-center mb-4">
+                                        <div class="flex text-yellow-400 mr-2">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star-half-alt"></i>
+                                        </div>
+                                        <span class="text-gray-500 text-sm">(24 opiniones)</span>
+                                    </div>
+                                    <p id="modal-product-price" class="text-2xl font-bold text-indigo-600 mb-4">$59.99</p>
+                                    <p id="modal-product-description" class="text-gray-600 mb-6">Descripción detallada del producto, materiales, características especiales y detalles de cuidado.</p>
+                                    
+                                    <div class="mb-6">
+                                        <span class="block text-gray-800 font-medium mb-2">Talla</span>
+                                        <div class="flex space-x-2">
+                                            <button class="border rounded px-3 py-1 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500">XS</button>
+                                            <button class="border rounded px-3 py-1 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500">S</button>
+                                            <button class="border rounded px-3 py-1 bg-indigo-600 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">M</button>
+                                            <button class="border rounded px-3 py-1 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500">L</button>
+                                            <button class="border rounded px-3 py-1 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500">XL</button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mb-6">
+                                        <span class="block text-gray-800 font-medium mb-2">Color</span>
+                                        <div class="flex space-x-2">
+                                            <button class="w-8 h-8 rounded-full bg-red-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"></button>
+                                            <button class="w-8 h-8 rounded-full bg-blue-500 border-2 border-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500"></button>
+                                            <button class="w-8 h-8 rounded-full bg-black focus:outline-none focus:ring-2 focus:ring-indigo-500"></button>
+                                            <button class="w-8 h-8 rounded-full bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"></button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-center mb-6">
+                                        <span class="mr-4 text-gray-800 font-medium">Cantidad</span>
+                                        <div class="flex items-center border rounded">
+                                            <button class="px-3 py-1 text-gray-600 hover:bg-gray-100">-</button>
+                                            <span class="px-4">1</span>
+                                            <button class="px-3 py-1 text-gray-600 hover:bg-gray-100">+</button>
+                                        </div>
+                                    </div>
+                                    
+                                    <button class="add-to-cart-modal w-full bg-indigo-600 text-white py-3 rounded-lg font-bold hover:bg-indigo-700 transition duration-300 mb-2">Añadir al Carrito</button>
+                                    <button class="w-full border border-indigo-600 text-indigo-600 py-2 rounded-lg font-medium hover:bg-indigo-50 transition duration-300">Comprar Ahora</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="carrito.js"></script>
+</body>
+</html>
+
