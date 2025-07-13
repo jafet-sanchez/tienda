@@ -101,7 +101,7 @@ function updateCart() {
         div.className = 'flex py-4 cart-item';
         div.innerHTML = `
             <div class="w-20 h-20 bg-gray-100 rounded-md overflow-hidden">
-                <img src="https://placehold.co/200x200" alt="${item.name}" class="w-full h-full object-cover">
+                <img src="" alt="${item.name}" class="w-full h-full object-cover">
             </div>
             <div class="ml-4 flex-grow">
                 <h4 class="font-medium">${item.name}</h4>
