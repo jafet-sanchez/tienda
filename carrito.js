@@ -15,6 +15,66 @@ function loadCart() {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
+    const modalAddBtn = document.getElementById('add-to-cart-from-modal');
+
+    document.querySelectorAll('.view-details').forEach(img => {
+        img.addEventListener('click', () => {
+            modalImage.src = img.getAttribute('data-image');
+            modalName.textContent = img.getAttribute('data-name');
+            modalPrice.textContent = `$${parseFloat(img.getAttribute('data-price')).toFixed(2)}`;
+            modalDescription.textContent = img.getAttribute('data-description');
+
+            // Establecer datos en el botón del modal
+            modalAddBtn.setAttribute('data-id', img.getAttribute('data-id') || Date.now());
+            modalAddBtn.setAttribute('data-name', img.getAttribute('data-name'));
+            modalAddBtn.setAttribute('data-price', img.getAttribute('data-price'));
+
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        });
+    });
+
+    modalAddBtn.addEventListener('click', () => {
+        const id = modalAddBtn.getAttribute('data-id');
+        const name = modalAddBtn.getAttribute('data-name');
+        const price = parseFloat(modalAddBtn.getAttribute('data-price'));
+
+        if (id && name && price) {
+            addToCart(id, name, price);
+            closeModal();
+        }
+    });
+
+    // Modal Vista Rápida al hacer clic en imagen
+    const modal = document.getElementById('product-modal');
+    const modalOverlay = document.getElementById('modal-overlay');
+    const closeModalBtn = document.getElementById('close-modal');
+
+    const modalImage = document.getElementById('modal-product-image');
+    const modalName = document.getElementById('modal-product-name');
+    const modalPrice = document.getElementById('modal-product-price');
+    const modalDescription = document.getElementById('modal-product-description');
+
+    document.querySelectorAll('.view-details').forEach(img => {
+        img.addEventListener('click', () => {
+            modalImage.src = img.getAttribute('data-image');
+            modalName.textContent = img.getAttribute('data-name');
+            modalPrice.textContent = `$${parseFloat(img.getAttribute('data-price')).toFixed(2)}`;
+            modalDescription.textContent = img.getAttribute('data-description');
+
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        });
+    });
+
+    closeModalBtn.addEventListener('click', closeModal);
+    modalOverlay.addEventListener('click', closeModal);
+
+    function closeModal() {
+        modal.classList.add('hidden');
+        document.body.style.overflow = '';
+    }
+
     loadCart();
 
     // Añadir producto desde botón

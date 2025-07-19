@@ -204,7 +204,7 @@
                 <!-- Producto 1 -->
                 <div class="bg-white rounded-lg overflow-hidden shadow-sm product-card transition duration-300">
                     <div class="relative">
-                        <img src="https://placehold.co/600x600" alt="Vestido midi floral con estampado tropical en tonos azules y verdes para verano" class="w-full h-80 object-cover">
+                        <img src="https://placehold.co/600x600" alt="Vestido midi floral con estampado tropical en tonos azules y verdes para verano" class="w-full h-80 object-cover cursor-pointer view-details" data-name="Vestido" data-price="49.99" data-description="Vestido midi floral con estampado tropical en tonos azules y verdes para verano" data-image="https://placehold.co/600x600">
                         <div class="absolute top-2 right-2">
                             <button class="bg-white rounded-full p-2 shadow hover:bg-indigo-600 hover:text-white">
                                 <i class="far fa-heart"></i>
@@ -226,7 +226,7 @@
                 <!-- Producto 2 -->
                 <div class="bg-white rounded-lg overflow-hidden shadow-sm product-card transition duration-300">
                     <div class="relative">
-                        <img src="https://placehold.co/600x600" alt="Camisa de lino blanca para hombre con botones de nácar y bolsillo de pecho" class="w-full h-80 object-cover">
+                        <img src="https://placehold.co/600x600" alt="Camisa de lino blanca para hombre con botones de nácar y bolsillo de pecho" class="w-full h-80 object-cover cursor-pointer view-details" data-name="Camisa" data-price="49.99" data-description="Camisa de lino blanca para hombre con botones de nácar y bolsillo de pecho" data-image="https://placehold.co/600x600">
                         <span class="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded">Nuevo</span>
                         <div class="absolute top-2 right-2">
                             <button class="bg-white rounded-full p-2 shadow hover:bg-indigo-600 hover:text-white">
@@ -249,7 +249,7 @@
                 <!-- Producto 3 -->
                 <div class="bg-white rounded-lg overflow-hidden shadow-sm product-card transition duration-300">
                     <div class="relative">
-                        <img src="https://placehold.co/600x600" alt="Jeans negros ajustados con roturas estratégicas y efecto desgastado para looks urbanos" class="w-full h-80 object-cover">
+                        <img src="https://placehold.co/600x600" alt="Jeans negros ajustados con roturas estratégicas y efecto desgastado para looks urbanos" class="w-full h-80 object-cover cursor-pointer view-details" data-name="Jeans" data-price="49.99" data-description="Jeans negros ajustados con roturas estratégicas y efecto desgastado para looks urbanos" data-image="https://placehold.co/600x600">
                         <span class="absolute top-2 left-2 bg-green-500 text-white text-xs px-2 py-1 rounded">-20%</span>
                         <div class="absolute top-2 right-2">
                             <button class="bg-white rounded-full p-2 shadow hover:bg-indigo-600 hover:text-white">
@@ -275,7 +275,7 @@
                 <!-- Producto 4 -->
                 <div class="bg-white rounded-lg overflow-hidden shadow-sm product-card transition duration-300">
                     <div class="relative">
-                        <img src="/img/zapatos-negros.avif" alt="Sneakers deportivas blancas con detalles en negro y suela gruesa para estilo urbano" class="w-full h-80 object-cover">
+                        <img src="/img/zapatos-negros.avif" alt="Sneakers deportivas blancas con detalles en negro y suela gruesa para estilo urbano" class="w-full h-80 object-cover cursor-pointer view-details" data-name="Sneakers Urbanas" data-price="79.99" data-description="Sneakers deportivas blancas con detalles en negro y suela gruesa para estilo urbano" data-image="/img/zapatos-negros.avif" >
                         <div class="absolute top-2 right-2">
                             <button class="bg-white rounded-full p-2 shadow hover:bg-indigo-600 hover:text-white">
                                 <i class="far fa-heart"></i>
@@ -463,16 +463,6 @@
                                 <!-- Información del producto -->
                                 <div class="md:w-1/2 md:pl-8">
                                     <h3 id="modal-product-name" class="text-2xl font-bold mb-2">Nombre del Producto</h3>
-                                    <div class="flex items-center mb-4">
-                                        <div class="flex text-yellow-400 mr-2">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star-half-alt"></i>
-                                        </div>
-                                        <span class="text-gray-500 text-sm">(24 opiniones)</span>
-                                    </div>
                                     <p id="modal-product-price" class="text-2xl font-bold text-indigo-600 mb-4">$59.99</p>
                                     <p id="modal-product-description" class="text-gray-600 mb-6">Descripción detallada del producto, materiales, características especiales y detalles de cuidado.</p>
                                     
@@ -506,7 +496,7 @@
                                         </div>
                                     </div>
                                     
-                                    <button class="add-to-cart-modal w-full bg-indigo-600 text-white py-3 rounded-lg font-bold hover:bg-indigo-700 transition duration-300 mb-2">Añadir al Carrito</button>
+                                    <button id="add-to-cart-from-modal" class="add-to-cart-modal w-full bg-indigo-600 text-white py-3 rounded-lg font-bold hover:bg-indigo-700 transition duration-300 mb-2" data-id="" data-name="" data-price="">Añadir al Carrito</button>
                                     <button class="w-full border border-indigo-600 text-indigo-600 py-2 rounded-lg font-medium hover:bg-indigo-50 transition duration-300">Comprar Ahora</button>
                                 </div>
                             </div>
